@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="Tienda">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="320" y="120"/>
+	<column name="ID_Tienda" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Nombre">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Ciudad">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Barrio">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Provincia">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Tienda_pk" type="pk-constr" table="public.&quot;Tienda&quot;">
+		<columns names="ID_Tienda" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Trabajador">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="860" y="80"/>
+	<column name="Codigo_trabajador" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="DNI">
+		<type name="varchar" length="9"/>
+	</column>
+	<column name="Nombre">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Apellidos">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Puesto">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Salario">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Trabajador_pk" type="pk-constr" table="public.&quot;Trabajador&quot;">
+		<columns names="Codigo_trabajador" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="DNI_UNIQUE" type="uq-constr" table="public.&quot;Trabajador&quot;">
+		<columns names="DNI" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="ID_Tienda_Tienda" index="6"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Tienda_fk" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="Trabaja en" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Tienda&quot;"
+	 dst-table="public.&quot;Trabajador&quot;"
+	 src-required="true" dst-required="false"/>
+
+<table name="Ticket">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1020" y="380"/>
+	<column name="No_de_tickect" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Importe">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Fecha">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="Ticket_pk" type="pk-constr" table="public.&quot;Ticket&quot;">
+		<columns names="No_de_tickect" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="Codigo_trabajador_Trabajador" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Trabajador_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Emite ticket" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Trabajador&quot;"
+	 dst-table="public.&quot;Ticket&quot;"
+	 src-required="false" dst-required="false"/>
+
+<table name="Productos">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="340" y="600"/>
+	<column name="Codigo_de_barras" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Nombre">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Tipo">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Descripcion">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Precio">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Productos_pk" type="pk-constr" table="public.&quot;Productos&quot;">
+		<columns names="Codigo_de_barras" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Ticket_Productos">
+	<schema name="public"/>
+	<position x="1040" y="620"/>
+	<column name="Cantidad">
+		<type name="smallint" length="0"/>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="Codigo_de_barras_Productos" index="2"/>
+		<object name="No_de_tickect_Ticket" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Productos_fk" index="2"/>
+		<object name="Ticket_Productos_pk" index="0"/>
+		<object name="Ticket_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Ticket_tiene_muchos_muchos_Ticket_tiene_muchos_Productos" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.&quot;Ticket&quot;"
+	 dst-table="public.&quot;Ticket_Productos&quot;"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="Productos_tiene_muchos_muchos_Ticket_tiene_muchos_Productos" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.&quot;Productos&quot;"
+	 dst-table="public.&quot;Ticket_Productos&quot;"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<table name="Tienda_Productos">
+	<schema name="public"/>
+	<position x="260" y="320"/>
+	<column name="Stock">
+		<type name="smallint" length="0"/>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="Codigo_de_barras_Productos" index="1"/>
+		<object name="ID_Tienda_Tienda" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Productos_fk" index="2"/>
+		<object name="Tienda_Productos_pk" index="0"/>
+		<object name="Tienda_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Tienda_tiene_muchos_muchos_Tienda_tiene_muchos_Productos" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.&quot;Tienda&quot;"
+	 dst-table="public.&quot;Tienda_Productos&quot;"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="Productos_tiene_muchos_muchos_Tienda_tiene_muchos_Productos" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.&quot;Productos&quot;"
+	 dst-table="public.&quot;Tienda_Productos&quot;"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+</dbmodel>
