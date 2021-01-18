@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="Musicos">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="40" y="40"/>
+	<column name="codigo_musico" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="dni" not-null="true">
+		<type name="char" length="10"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="direccion" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="codigo_postal" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="ciudad" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="provincia" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="telefono" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="instrumentos" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Musicos_pk" type="pk-constr" table="public.&quot;Musicos&quot;">
+		<columns names="codigo_musico" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="Unique_DNI" type="uq-constr" table="public.&quot;Musicos&quot;">
+		<columns names="dni" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="codigo_grupo_Grupos" index="9"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Grupos_fk" index="2"/>
+	</customidxs>
+</table>
+
+<table name="Grupos">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="640" y="80"/>
+	<column name="codigo_grupo" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="genero_musical" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="pais" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="sitio_web" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Grupo_pk" type="pk-constr" table="public.&quot;Grupos&quot;">
+		<columns names="codigo_grupo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Conciertos">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1180" y="80"/>
+	<column name="codigo_concierto" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="fecha_realizacion" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="pais" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ciudad" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="recinto" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Conciertos_pk" type="pk-constr" table="public.&quot;Conciertos&quot;">
+		<columns names="codigo_concierto" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Grupos_Tocan_Conciertos" type="relnn"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Grupos&quot;"
+	 dst-table="public.&quot;Conciertos&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="Grupos_Tocan_Conciertos"
+	upd-action="RESTRICT"
+	del-action="RESTRICT">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<table name="Discos">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="480" y="380"/>
+	<column name="codigo_disco" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="titulo" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="fecha_edicion" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="genero" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="formato" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Discos_pk" type="pk-constr" table="public.&quot;Discos&quot;">
+		<columns names="codigo_disco" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="codigo_grupo_Grupos" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Grupos_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Grupo de grupo_tiene_muchos_Discos" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Grupos&quot;"
+	 dst-table="public.&quot;Discos&quot;"
+	 src-required="true" dst-required="false"
+	upd-action="RESTRICT"
+	del-action="RESTRICT">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<table name="Canciones">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="20" y="400"/>
+	<column name="codigo_cancion" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="compositor" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="fecha_grabacion" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="duracion" not-null="true">
+		<type name="time" length="0"/>
+	</column>
+	<constraint name="Canciones_pk" type="pk-constr" table="public.&quot;Canciones&quot;">
+		<columns names="codigo_cancion" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="codigo_disco_Discos" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Discos_fk" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="Discos_tiene_muchos_Canciones" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Discos&quot;"
+	 dst-table="public.&quot;Canciones&quot;"
+	 src-required="true" dst-required="false"
+	upd-action="RESTRICT"
+	del-action="RESTRICT">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<table name="Entradas">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1060" y="340"/>
+	<column name="codigo_entrada" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="localidad" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="precio" not-null="true">
+		<type name="money" length="0"/>
+	</column>
+	<column name="usuario" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Entradas_pk" type="pk-constr" table="public.&quot;Entradas&quot;">
+		<columns names="codigo_entrada" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="codigo_concierto_Conciertos" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Conciertos_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Conciertos_tiene_muchos_Entradas" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Conciertos&quot;"
+	 dst-table="public.&quot;Entradas&quot;"
+	 src-required="true" dst-required="false"
+	upd-action="RESTRICT"
+	del-action="RESTRICT"/>
+
+<relationship name="Grupo_has_many_Musicos" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#9ac721"
+	 src-table="public.&quot;Grupos&quot;"
+	 dst-table="public.&quot;Musicos&quot;"
+	 src-required="true" dst-required="false"
+	upd-action="RESTRICT"
+	del-action="RESTRICT"/>
+
+</dbmodel>
